@@ -1,0 +1,19 @@
+<div class="grade-list">
+  @for (grade of grades; track grade) {
+  <div
+    class="grade-item"
+    [class.selected]="grade.id === selectedGradeId"
+    (click)="onSelectGrade(grade.id)"
+  >
+    <div class="grade-symbol">{{ grade.symbolicGrade }}</div>
+    <div class="grade-range">
+      {{ grade.minPercentage }}% – {{ grade.maxPercentage }}%
+    </div>
+    <button mat-icon-button (click)="onDeleteGrade(grade.id)">
+      <mat-icon>delete_outline</mat-icon>
+    </button>
+  </div>
+  }
+
+  <button class="add-button" (click)="onAddGrade()">+ ADD NEW GRADE</button>
+</div>

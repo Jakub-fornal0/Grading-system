@@ -1,0 +1,41 @@
+.grade-list {
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+}
+
+.grade-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 2px solid transparent;
+  cursor: pointer;
+
+  .grade-symbol {
+    margin-right: 10px;
+    font-weight: 500;
+  }
+
+  button {
+    margin-left: auto;
+  }
+
+  &:hover {
+    background-color: #ebebeb;
+  }
+}
+
+.selected {
+  background: #fffdfd;
+  border-color: #e8e4e4;
+}
+
+.add-button {
+  margin-top: 12px;
+  background: none;
+  border: none;
+  color: #2e7d32;
+  font-weight: bold;
+  cursor: pointer;
+}
