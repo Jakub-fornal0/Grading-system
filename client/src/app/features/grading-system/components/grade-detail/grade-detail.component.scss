@@ -1,0 +1,16 @@
+.grade-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  mat-form-field {
+    width: 50%;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
