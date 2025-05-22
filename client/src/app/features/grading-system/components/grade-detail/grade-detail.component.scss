@@ -1,16 +1,24 @@
-.grade-detail {
+.grade-detail-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16px;
+  gap: 24px;
+  padding: 24px;
+  margin: 0 auto;
+
+  .form-header {
+    font-size: 19px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    text-align: left;
+  }
 
   mat-form-field {
-    width: 50%;
+    width: 100%;
   }
-}
 
-.actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 16px;
+  .form-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+  }
 }

@@ -5,6 +5,7 @@ import { GradeDetailComponent } from './components/grade-detail/grade-detail.com
 import { GradeService } from '../../core/services/grade.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { calculateGradeBoundaries } from '../../shared/utils/grading-utils';
 
 @Component({
   selector: 'grading-system',
@@ -14,37 +15,32 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   styleUrl: './grading-system.component.scss',
 })
 export class GradingSystemComponent implements OnInit {
-  public selectedGradeId: string | null = null;
-  public isEditMode: boolean = false;
   public grades: Grade[] = [];
+  public editingGradeId: string | null | undefined = undefined;
 
   private readonly gradeService = inject(GradeService);
   private readonly snackBar = inject(MatSnackBar);
   private readonly destroyRef = inject(DestroyRef);
 
   public ngOnInit(): void {
-    this.getGrades();
+    this.loadGrades();
   }
 
-  public onGradeSelected(gradeId: string): void {
-    this.selectedGradeId = gradeId;
-    this.isEditMode = true;
+  public onSelectGrade(gradeId: string): void {
+    this.editingGradeId = gradeId;
   }
 
   public onAddGrade(): void {
-    this.selectedGradeId = null;
-    this.isEditMode = true;
+    this.editingGradeId = null;
   }
 
   public onCancel(): void {
-    this.selectedGradeId = null;
-    this.isEditMode = false;
+    this.editingGradeId = undefined;
   }
 
   public onSave(): void {
-    this.selectedGradeId = null;
-    this.isEditMode = false;
-    this.getGrades();
+    this.editingGradeId = undefined;
+    this.loadGrades();
   }
 
   public onDeleteGrade(gradeId: string): void {
@@ -52,43 +48,33 @@ export class GradingSystemComponent implements OnInit {
       .deleteGrade(gradeId)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () => {
-          this.snackBar.open('Grade deleted successfully.', 'Ok', {
-            duration: 1500,
-          });
-          this.getGrades();
-          this.isEditMode = false;
-        },
-        error: (err) => {
-          if (err.status === 404) {
-            this.snackBar.open('The grade not found.', 'Ok');
-          } else {
-            this.snackBar.open('An unexpected error occurred.', 'Ok');
-          }
-        },
+        next: () => this.handleDeleteSuccess(),
+        error: (err) => this.handleDeleteError(err),
       });
   }
-
-  private getGrades(): void {
+  private loadGrades(): void {
     this.gradeService
       .getGrades()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((grades: Grade[]) => {
-        const sortedGrades: Grade[] = grades.sort(
-          (a: Grade, b: Grade) => a.minPercentage - b.minPercentage
-        );
-
-        const gradesWithMaxPercentage: Grade[] = sortedGrades.map(
-          (grade, index, array) => {
-            const nextMinPercentage: number = array[index + 1]?.minPercentage;
-            return {
-              ...grade,
-              maxPercentage: nextMinPercentage ? nextMinPercentage - 1 : 100,
-            };
-          }
-        );
-
-        this.grades = gradesWithMaxPercentage;
+        this.grades = calculateGradeBoundaries(grades);
       });
+  }
+
+  private handleDeleteSuccess(): void {
+    this.snackBar.open('Grade deleted successfully.', 'Ok', {
+      duration: 1500,
+    });
+    this.loadGrades();
+    this.editingGradeId = null;
+  }
+
+  private handleDeleteError(err: any): void {
+    const message =
+      err?.status === 404
+        ? 'The grade was not found.'
+        : 'An unexpected error occurred.';
+
+    this.snackBar.open(message, 'Ok');
   }
 }

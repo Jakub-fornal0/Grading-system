@@ -1,23 +1,31 @@
 <div class="grade-list">
   @if (grades.length === 0) {
-  <div class="empty-message">
-    No grades available. Click the button below to add one.
-  </div>
-  } @else { @for (grade of grades; track grade) {
-  <div
-    class="grade-item"
-    [class.selected]="grade.id === selectedGradeId"
-    (click)="onSelectGrade(grade.id)"
-  >
-    <div class="grade-symbol">{{ grade.symbolicGrade }}</div>
-    <div class="grade-range">
-      {{ grade.minPercentage }}% – {{ grade.maxPercentage }}%
+    <div class="grade-empty">
+      No grades available. Click the button below to add one.
     </div>
-    <button mat-icon-button (click)="onDeleteGrade(grade.id, $event)">
-      <mat-icon>delete_outline</mat-icon>
-    </button>
-  </div>
-  } }
+  } @else {
+    @for (grade of grades; track grade.id) {
+      <div
+        class="grade-item"
+        [class.grade-selected]="grade.id === selectedGradeId"
+        (click)="emitSelectGrade(grade.id)"
+      >
+        <div class="grade-symbol">{{ grade.symbolicGrade }}</div>
+        <div class="grade-range">{{ grade.minPercentage }}% – {{ grade.maxPercentage }}%</div>
 
-  <button class="add-button" (click)="onAddGrade()">+ ADD NEW GRADE</button>
+        <button
+          mat-icon-button
+          color="warn"
+          aria-label="Delete grade"
+          (click)="confirmAndEmitDeleteGrade(grade.id, $event)"
+        >
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </div>
+    }
+  }
+
+  <button class="grade-add" (click)="emitAddGrade()">
+    + ADD NEW GRADE
+  </button>
 </div>

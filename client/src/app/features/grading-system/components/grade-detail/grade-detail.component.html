@@ -1,21 +1,32 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="grade-detail">
-  <h2>{{ formHeader }}</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="grade-detail-form">
+  <h2 class="form-header">{{ formHeader }}</h2>
 
-  <mat-form-field>
+  <mat-form-field appearance="fill">
     <mat-label>Percent from</mat-label>
-    <input matInput type="number" formControlName="minPercentage" />
+    <input matInput type="number" formControlName="minPercentage"/>
     <span matSuffix>%</span>
-    @if (minPercentageError) {
-    <mat-error> {{ minPercentageError }} </mat-error>
+
+    @if (form.get('minPercentage')?.hasError('required')) {
+      <mat-error>Minimum percentage is required</mat-error>
+    }
+
+    @if (form.get('minPercentage')?.hasError('conflict')) {
+      <mat-error>
+        This percentage range conflicts with an existing grade.
+      </mat-error>
     }
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field appearance="fill">
     <mat-label>Grade</mat-label>
     <input matInput formControlName="symbolicGrade" />
+
+    @if (form.get('symbolicGrade')?.hasError('required')) {
+      <mat-error>Symbolic grade is required</mat-error>
+    }
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field appearance="fill">
     <mat-label>Grade description</mat-label>
     <textarea
       matInput
@@ -26,13 +37,8 @@
     ></textarea>
   </mat-form-field>
 
-  <div class="actions">
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      [disabled]="form.invalid"
-    >
+  <div class="form-actions">
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
       Save
     </button>
     <button mat-button color="warn" type="button" (click)="onCancel()">
