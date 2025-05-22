@@ -1,18 +1,18 @@
 <div class="grade-management">
   <grade-list
     [grades]="grades"
-    [selectedGradeId]="selectedGradeId"
-    (selectGrade)="onGradeSelected($event)"
+    [selectedGradeId]="editingGradeId"
+    (selectGrade)="onSelectGrade($event)"
     (addGrade)="onAddGrade()"
     (deleteGrade)="onDeleteGrade($event)"
   >
   </grade-list>
 
-  @if (isEditMode) {
-  <grade-detail
-    [selectedGradeId]="selectedGradeId"
-    (cancel)="onCancel()"
-    (save)="onSave()"
-  ></grade-detail>
+  @if (editingGradeId !== undefined) {
+    <grade-detail
+      [selectedGradeId]="editingGradeId"
+      (cancel)="onCancel()"
+      (save)="onSave()"
+    ></grade-detail>
   }
 </div>

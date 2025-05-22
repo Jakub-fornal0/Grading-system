@@ -2,13 +2,13 @@
   display: flex;
 }
 
-grade-list {
-  width: 50%;
-  height: 100vh;
-  background: #eef3ed;
-}
-
+grade-list,
 grade-detail {
   width: 50%;
   height: 100vh;
+  overflow: auto;
+}
+
+grade-list {
+  background: #eef3ed;
 }

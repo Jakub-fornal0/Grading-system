@@ -12,3 +12,13 @@ body {
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: #ffffff !important;
 }
+
+.mat-mdc-button:not(:disabled),
+.mat-mdc-raised-button:not(:disabled) {
+  color: #206b32 !important;
+}
+
+.mat-mdc-snack-bar-container .mat-mdc-snackbar-surface {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}

@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { Grade } from '../../../../shared/models/grade.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'grade-list',
@@ -15,7 +16,7 @@ import { ConfirmDialogComponent } from '../../../../shared/components/confirm-di
 })
 export class GradeListComponent {
   @Input() grades: Grade[] = [];
-  @Input() selectedGradeId: string | null = null;
+  @Input() selectedGradeId: string | null | undefined = undefined;
 
   @Output() selectGrade = new EventEmitter<string>();
   @Output() addGrade = new EventEmitter<void>();
@@ -23,28 +24,30 @@ export class GradeListComponent {
 
   private readonly dialog = inject(MatDialog);
 
-  public onSelectGrade(gradeId: string): void {
+  public emitSelectGrade(gradeId: string): void {
     this.selectGrade.emit(gradeId);
   }
 
-  public onDeleteGrade(gradeId: string, event: Event): void {
-    event.stopPropagation();
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: {
-        title: 'Deleting grade',
-        content: 'Are you sure you want to delete the grade?',
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        this.deleteGrade.emit(gradeId);
-      }
-    });
+  public emitAddGrade(): void {
+    this.addGrade.emit();
   }
 
-  public onAddGrade(): void {
-    this.addGrade.emit();
+  public confirmAndEmitDeleteGrade(gradeId: string, event: MouseEvent): void {
+    event.stopPropagation();
+
+    this.dialog
+      .open(ConfirmDialogComponent, {
+        data: {
+          title: 'Deleting grade',
+          content: 'Are you sure you want to delete the grade?',
+        },
+      })
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((confirmed: boolean) => {
+        if (confirmed) {
+          this.deleteGrade.emit(gradeId);
+        }
+      });
   }
 }
