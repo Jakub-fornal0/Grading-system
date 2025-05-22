@@ -41,13 +41,19 @@ export class GradingSystemComponent implements OnInit {
     this.isEditMode = false;
   }
 
+  public onSave(): void {
+    this.selectedGradeId = null;
+    this.isEditMode = false;
+    this.getGrades();
+  }
+
   public onDeleteGrade(gradeId: string): void {
     this.gradeService
       .deleteGrade(gradeId)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
-          this.snackBar.open('Grade deleted', 'Ok', {
+          this.snackBar.open('Grade deleted successfully.', 'Ok', {
             duration: 1500,
           });
           this.getGrades();
@@ -55,10 +61,9 @@ export class GradingSystemComponent implements OnInit {
         },
         error: (err) => {
           if (err.status === 404) {
-            this.snackBar.open(
-              'An error occurred. The grade could not be deleted.',
-              'Ok'
-            );
+            this.snackBar.open('The grade not found.', 'Ok');
+          } else {
+            this.snackBar.open('An unexpected error occurred.', 'Ok');
           }
         },
       });
