@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Grade } from '../../../../shared/models/grade.model';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../../../../shared/models/components/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'grade-list',
@@ -27,7 +27,9 @@ export class GradeListComponent {
     this.selectGrade.emit(gradeId);
   }
 
-  public onDeleteGrade(gradeId: string): void {
+  public onDeleteGrade(gradeId: string, event: Event): void {
+    event.stopPropagation();
+
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
         title: 'Deleting grade',
