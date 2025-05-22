@@ -4,17 +4,11 @@
   </div>
 
   <div class="nav-list">
-    <a class="nav-item" routerLink="/home" routerLinkActive="link-active">
-      <mat-icon>domain</mat-icon>
-      <span>Home</span>
-    </a>
-    <a
-      class="nav-item"
-      routerLink="/configuration"
-      routerLinkActive="link-active"
-    >
-      <mat-icon>settings</mat-icon>
-      <span>Configuration</span>
-    </a>
+    @for (item of sidebarItems; track item.link) {
+      <a class="nav-item" [routerLink]="item.link" routerLinkActive="link-active">
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span>{{ item.label }}</span>
+      </a>
+    }
   </div>
 </nav>

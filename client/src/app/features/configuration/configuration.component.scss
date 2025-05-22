@@ -1,0 +1,42 @@
+.tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  padding: 24px;
+  justify-content: flex-start;
+}
+
+.tile {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 15vw;
+  min-width: 120px;
+  max-width: 180px;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+    background-color: #f9f9f9;
+  }
+
+  .tile-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
+    color: #206b32;
+    margin-bottom: 12px;
+  }
+
+  .tile-title {
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
