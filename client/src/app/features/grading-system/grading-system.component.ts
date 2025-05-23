@@ -1,4 +1,10 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { GradeListComponent } from './components/grade-list/grade-list.component';
 import { Grade } from '../../shared/models/grade.model';
 import { GradeDetailComponent } from './components/grade-detail/grade-detail.component';
@@ -13,6 +19,7 @@ import { calculateGradeBoundaries } from '../../shared/utils/grading-utils';
   imports: [GradeListComponent, GradeDetailComponent, MatSnackBarModule],
   templateUrl: './grading-system.component.html',
   styleUrl: './grading-system.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GradingSystemComponent implements OnInit {
   public grades: Grade[] = [];
@@ -52,12 +59,13 @@ export class GradingSystemComponent implements OnInit {
         error: (err) => this.handleDeleteError(err),
       });
   }
+
   private loadGrades(): void {
     this.gradeService
       .getGrades()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((grades: Grade[]) => {
-        this.grades = calculateGradeBoundaries(grades);
+        this.grades = [...calculateGradeBoundaries(grades)];
       });
   }
 
@@ -65,8 +73,8 @@ export class GradingSystemComponent implements OnInit {
     this.snackBar.open('Grade deleted successfully.', 'Ok', {
       duration: 1500,
     });
+    this.editingGradeId = undefined;
     this.loadGrades();
-    this.editingGradeId = null;
   }
 
   private handleDeleteError(err: any): void {
@@ -74,7 +82,6 @@ export class GradingSystemComponent implements OnInit {
       err?.status === 404
         ? 'The grade was not found.'
         : 'An unexpected error occurred.';
-
     this.snackBar.open(message, 'Ok');
   }
 }

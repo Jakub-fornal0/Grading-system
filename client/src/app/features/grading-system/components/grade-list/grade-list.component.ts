@@ -1,4 +1,11 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+} from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,6 +20,7 @@ import { take } from 'rxjs';
   imports: [MatListModule, MatIconModule, MatButtonModule],
   templateUrl: './grade-list.component.html',
   styleUrl: './grade-list.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GradeListComponent {
   @Input() grades: Grade[] = [];

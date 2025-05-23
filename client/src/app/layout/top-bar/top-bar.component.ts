@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
   imports: [RouterModule, MatIconModule, MatButtonModule],
   templateUrl: './top-bar.component.html',
   styleUrl: './top-bar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TopBarComponent {
   @Input() title: string = '';

@@ -1,4 +1,9 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+} from '@angular/core';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import {
   ActivatedRoute,
@@ -16,6 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   imports: [SidebarComponent, RouterOutlet, TopBarComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {
   public showTopBar: boolean = false;

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
@@ -14,6 +14,7 @@ export interface SidebarItem {
   imports: [MatIconModule, RouterModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
   public isMenuOpen: boolean = false;
@@ -34,7 +35,7 @@ export class SidebarComponent {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  public closeMenuForMobile() {
+  public closeMenuForMobile(): void {
     this.isMenuOpen = false;
   }
 }
