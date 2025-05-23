@@ -1,9 +1,9 @@
 # Grading-system
 
 ## Setup
-cd client
-npm install
-ng serve
+1. cd client
+2. npm install
+3. ng serve
 
 ## Stack 
 - Angular 19
