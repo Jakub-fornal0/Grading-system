@@ -6,7 +6,11 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Grade, GradeCreate } from '../../../../shared/models/grade.model';
+import {
+  Grade,
+  GradeCreate,
+  GradeModify,
+} from '../../../../shared/models/grade.model';
 import {
   FormBuilder,
   FormGroup,
@@ -39,7 +43,11 @@ import { GradeErrorCode } from '../../../../shared/constants/grade-error-codes';
 export class GradeDetailComponent {
   @Input() set selectedGradeId(gradeId: string | null) {
     this._selectedGradeId = gradeId;
-    gradeId ? this.loadGrade(gradeId) : this.resetForm();
+    if (gradeId) {
+      this.loadGrade(gradeId);
+    } else {
+      this.resetForm();
+    }
   }
   @Output() cancel = new EventEmitter<void>();
   @Output() save = new EventEmitter<void>();
@@ -73,14 +81,19 @@ export class GradeDetailComponent {
       return;
     }
 
-    const grade: GradeCreate = this.form.getRawValue();
+    const grade: GradeModify = this.form.getRawValue();
 
     if (this._selectedGradeId) {
       this.saveGrade(() =>
         this.gradeService.updateGrade(this._selectedGradeId!, grade)
       );
     } else {
-      this.saveGrade(() => this.gradeService.addGrade(grade));
+      const gradeCreate: GradeCreate = {
+        minPercentage: grade.minPercentage ?? 0,
+        symbolicGrade: grade.symbolicGrade ?? '',
+      };
+
+      this.saveGrade(() => this.gradeService.addGrade(gradeCreate));
     }
   }
 

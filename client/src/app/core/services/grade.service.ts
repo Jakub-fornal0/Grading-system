@@ -26,12 +26,15 @@ export class GradeService {
       descriptiveGrade: '',
     },
   ];
+  private readonly baseUrl = '/grades';
 
   public getGrades(): Observable<Grade[]> {
+    // return this.http.get<Grade[]>(`${this.baseUrl}`);
     return of(this.grades);
   }
 
   public getGrade(gradeId: string): Observable<Grade> {
+    // return this.http.get<Grade>(`${this.baseUrl}/${gradeId}`);
     const grade = this.grades.find((grade: Grade) => grade.id === gradeId);
 
     if (!grade) {
@@ -42,6 +45,7 @@ export class GradeService {
   }
 
   public deleteGrade(gradeId: string): Observable<void> {
+    // return this.http.delete<void>(`${this.baseUrl}/${gradeId}`);
     const index: number = this.grades.findIndex(
       (grade: Grade) => grade.id === gradeId
     );
@@ -59,6 +63,7 @@ export class GradeService {
   }
 
   public addGrade(gradeCreate: GradeCreate): Observable<GradeCreated> {
+    // return this.http.post<GradeCreated>(`${this.baseUrl}`, gradeCreate);
     const conflict = this.grades.find(
       (grade: Grade) => grade.minPercentage === gradeCreate.minPercentage
     );
@@ -89,6 +94,7 @@ export class GradeService {
     gradeId: string,
     gradeModify: GradeModify
   ): Observable<void> {
+    // return this.http.patch<void>(`${this.baseUrl}/${gradeId}`, gradeModify);
     const grade = this.grades.find((grade: Grade) => grade.id === gradeId);
 
     if (!grade) {

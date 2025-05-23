@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
-import { TestComponent } from './layout/test/test.component';
 import { GradingSystemComponent } from './features/grading-system/grading-system.component';
 import { ConfigurationComponent } from './features/configuration/configuration.component';
+import { HomeComponent } from './features/home/home.component';
 
 export const routes: Routes = [
   {
@@ -10,7 +10,7 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', redirectTo: 'configuration', pathMatch: 'full' },
-      { path: 'home', component: TestComponent },
+      { path: 'home', component: HomeComponent },
       {
         path: 'configuration',
         children: [
