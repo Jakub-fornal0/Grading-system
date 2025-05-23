@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   DestroyRef,
   EventEmitter,
@@ -39,6 +40,7 @@ import { GradeErrorCode } from '../../../../shared/constants/grade-error-codes';
   ],
   templateUrl: './grade-detail.component.html',
   styleUrl: './grade-detail.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GradeDetailComponent {
   @Input() set selectedGradeId(gradeId: string | null) {
