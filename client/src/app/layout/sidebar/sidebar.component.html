@@ -1,0 +1,23 @@
+<button class="menu-toggle" [class.open]="isMenuOpen" (click)="toggleMenu()">
+  <mat-icon>{{ isMenuOpen ? "close" : "menu" }}</mat-icon>
+</button>
+
+<nav class="sidebar" [class.open]="isMenuOpen">
+  <div class="user-avatar">
+    <mat-icon class="avatar">account_circle</mat-icon>
+  </div>
+
+  <div class="nav-list">
+    @for (item of sidebarItems; track item.link) {
+      <a
+        class="nav-item"
+        (click)="closeMenuForMobile()"
+        [routerLink]="item.link"
+        routerLinkActive="link-active"
+      >
+        <mat-icon>{{ item.icon }}</mat-icon>
+        <span>{{ item.label }}</span>
+      </a>
+    }
+  </div>
+</nav>

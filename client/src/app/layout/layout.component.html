@@ -1,0 +1,9 @@
+<div class="layout">
+  <sidebar></sidebar>
+  <main class="content">
+    @if (showTopBar) {
+      <top-bar [title]="topBarTitle"></top-bar>
+    }
+    <router-outlet></router-outlet>
+  </main>
+</div>

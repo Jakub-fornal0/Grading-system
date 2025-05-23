@@ -1,0 +1,29 @@
+@use "../../../styles/variables" as *;
+
+.grade-management {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+grade-list,
+grade-detail {
+  width: 50%;
+  height: calc(100vh - 4.5rem);
+  overflow: auto;
+}
+
+grade-list {
+  background: $color-gray-muted;
+}
+
+@media (max-width: 768px) {
+  .grade-management {
+    flex-direction: column;
+  }
+
+  grade-list,
+  grade-detail {
+    width: 100%;
+    height: auto;
+  }
+}

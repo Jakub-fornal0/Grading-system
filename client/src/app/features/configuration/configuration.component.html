@@ -1,0 +1,8 @@
+<div class="tiles">
+  @for (tile of tiles; track tile.link) {
+    <div class="tile" [routerLink]="tile.link">
+      <mat-icon class="tile-icon">{{ tile.icon }}</mat-icon>
+      <span class="tile-title">{{ tile.title }}</span>
+    </div>
+  }
+</div>

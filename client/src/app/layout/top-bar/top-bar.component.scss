@@ -1,0 +1,23 @@
+@use "../../../styles/variables" as *;
+
+.top-bar {
+  display: flex;
+  align-items: center;
+  height: 2.5rem;
+  padding: 1rem 1.5rem;
+  background-color: $color-white;
+
+  button {
+    margin-right: 0.3125rem;
+  }
+
+  .title {
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    margin-left: 3.5rem;
+  }
+}
