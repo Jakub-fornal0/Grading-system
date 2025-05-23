@@ -16,6 +16,7 @@ export interface SidebarItem {
   styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent {
+  public isMenuOpen: boolean = false;
   public sidebarItems: SidebarItem[] = [
     {
       label: 'Home',
@@ -28,4 +29,12 @@ export class SidebarComponent {
       link: '/configuration',
     },
   ];
+
+  public toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  public closeMenuForMobile() {
+    this.isMenuOpen = false;
+  }
 }
